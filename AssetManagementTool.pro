@@ -10,16 +10,18 @@ CONFIG += c++11
 
 SOURCES += \
     config.cpp \
-    excelsheetwidget.cpp \
+    excelsheet.cpp \
     filedialog.cpp \
     main.cpp \
-    mainwindow.cpp
+    mainwindow.cpp \
+    util.cpp
 
 HEADERS += \
     config.h \
-    excelsheetwidget.h \
+    excelsheet.h \
     filedialog.h \
-    mainwindow.h
+    mainwindow.h \
+    util.h
 
 FORMS += \
     filedialog.ui \

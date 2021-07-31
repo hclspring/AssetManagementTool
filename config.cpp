@@ -69,6 +69,10 @@ int Config::getAssetBookDataStartRow() {
     return assetBookDataStartRow;
 }
 
+int Config::getAssetBookOrdinalColumn() {
+    return assetBookOrdinalColumn;
+}
+
 void Config::setDefaultValues()
 {
 

@@ -7,6 +7,7 @@
 #include "xlsxdocument.h"
 
 class Config;
+class ExcelSheet;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -20,16 +21,21 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void initTabWidget();
-    void readAssetBookFile();
+    //void initTabWidget(); //To delete
+    //void readAssetBookFile(); //To delete
 
 private:
     Ui::MainWindow *ui;
     Config *config;
+    ExcelSheet* fixedAssetSheet;
+    ExcelSheet* invisibleAssetSheet;
+    ExcelSheet* thirdSheet {NULL};
 
 private:
-    void initTableWidget(QTableWidget* tableWidget, const QVector<QString>& columnNames);
-    void readAssetBookSheet(QXlsx::Document& assetBookDocument, const QString& sheetName, QTableWidget* tableWidget);
+    void readShowAssetBook(const QString& file);
+    //void initTableWidget(QTableWidget* tableWidget, const QVector<QString>& columnNames); //To delete
+    //void readAssetBookSheet(QXlsx::Document& assetBookDocument, const QString& sheetName, QTableWidget* tableWidget); //To delete
+    //void test();
 
 };
 #endif // MAINWINDOW_H

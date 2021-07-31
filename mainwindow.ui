@@ -36,19 +36,19 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>1</number>
      </property>
      <widget class="QWidget" name="fixedAssetTab">
       <attribute name="title">
        <string>固定资产交付物台账</string>
       </attribute>
-      <widget class="QTableWidget" name="fixedAssetTableWidget">
+      <widget class="QTableWidget" name="fixedAssetSheetWidget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>491</width>
-         <height>511</height>
+         <x>0</x>
+         <y>0</y>
+         <width>511</width>
+         <height>361</height>
         </rect>
        </property>
       </widget>
@@ -57,13 +57,13 @@
       <attribute name="title">
        <string>无形资产交付物台账</string>
       </attribute>
-      <widget class="QTableWidget" name="invisibleAssetTableWidget">
+      <widget class="QTableWidget" name="invisibleAssetSheetWidget">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>10</y>
-         <width>491</width>
-         <height>511</height>
+         <x>0</x>
+         <y>0</y>
+         <width>521</width>
+         <height>361</height>
         </rect>
        </property>
       </widget>

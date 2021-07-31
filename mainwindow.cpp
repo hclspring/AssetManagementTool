@@ -1,6 +1,7 @@
 ﻿#include "mainwindow.h"
 #include "ui_mainwindow.h"
 #include "config.h"
+#include "excelsheet.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -8,8 +9,13 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
     config = new Config();
-    initTabWidget();
-    readAssetBookFile();
+    fixedAssetSheet = new ExcelSheet(ui->fixedAssetSheetWidget);
+    invisibleAssetSheet = new ExcelSheet(ui->invisibleAssetSheetWidget);
+    thirdSheet = NULL;
+    //initTabWidget();
+    //readAssetBookFile();
+    //test();
+    readShowAssetBook(config->getAssetBookFilename());
 }
 
 MainWindow::~MainWindow()
@@ -17,6 +23,7 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+/*
 void MainWindow::initTabWidget()
 {
     initTableWidget(ui->fixedAssetTableWidget, config->getFixedAssetColumnNames());
@@ -83,4 +90,50 @@ void MainWindow::readAssetBookSheet(QXlsx::Document& assetBookDocument, const QS
     //跳过不是数据的行，方法为判断序号哪一行从1开始。
 }
 
+void MainWindow::test()
+{
+    ui->fixedAssetTableWidget = new ExcelSheetWidget();
+    ExcelSheetWidget* sheetWidget = new ExcelSheetWidget;
+    sheetWidget->initFileConfig(config->getAssetBookColumnNameRow(), config->getAssetBookDataStartRow(), 1);
+    QXlsx::Document assetBookFile(config->getAssetBookFilename());
+    if (assetBookFile.load()) {
+        sheetWidget->readSheet(assetBookFile, "硬件");
+        sheetWidget->showSheet();
+        int tabIndex = ui->tabWidget->addTab(sheetWidget, "测试TAB");
+        sheetWidget->hideRow(0); //测试如何addTab后再对widget进行控制
+    } else {
+        qDebug() << "读取交付物台账文件" << config->getAssetBookFilename() << "失败！";
+    }
+}
+*/
+
+void MainWindow::readShowAssetBook(const QString& file)
+{
+    QXlsx::Document assetBookFile(file);
+    if (assetBookFile.load()) {
+        QStringList sheetNames = assetBookFile.sheetNames();
+        for (int sheetIndex = 0; sheetIndex < sheetNames.length(); ++sheetIndex) {
+            QString sheetName = sheetNames[sheetIndex];
+            if (sheetName.contains("硬件") || sheetName.contains("固定")) {
+                //读取固定资产交付物台账内容，展现到界面上
+                fixedAssetSheet->initFileConfig(config->getAssetBookColumnNameRow(),
+                                                config->getAssetBookDataStartRow(),
+                                                config->getAssetBookOrdinalColumn());
+                fixedAssetSheet->readSheet(assetBookFile, sheetName);
+                fixedAssetSheet->showSheet();
+            } else if (sheetName.contains("软件") || sheetName.contains("无形")) {
+                //读取无形资产交付物台账内容，展现到界面上
+                invisibleAssetSheet->initFileConfig(config->getAssetBookColumnNameRow(),
+                                                config->getAssetBookDataStartRow(),
+                                                config->getAssetBookOrdinalColumn());
+                invisibleAssetSheet->readSheet(assetBookFile, sheetName);
+                invisibleAssetSheet->showSheet();
+            } else {
+                qDebug() << "发现名为" << sheetNames[sheetIndex] << "的未定义sheet，未读取。";
+            }
+        }
+    } else {
+        qDebug() << "读取交付物台账文件" << file << "失败！";
+    }
+}
 
