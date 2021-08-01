@@ -24,9 +24,27 @@ public:
     QVector<QString> getInvisibleAssetColumnNames();//没用，待删
     int getFixedAssetColumnIndex(const QString& columnName); //没用，待删
     int getInvisibleAssetColumnIndex(const QString& columnName);//没用，待删
-    int getAssetBookColumnNameRow();
-    int getAssetBookDataStartRow();
-    int getAssetBookOrdinalColumn();
+    int getBookTableColumnNameRow();
+    int getBookTableDataStartRow();
+    int getBookTableOrdinalColumn();
+
+    int getDetailTableColumnNameRow() const;
+
+    int getDetailTableDataStartRow() const;
+
+    int getDetailTableOrdinalColumn() const;
+
+    int getAssetTableColumnNameRow() const;
+
+    int getAssetTableDataStartRow() const;
+
+    int getAssetTableOrdinalColumn() const;
+
+    int getCmdbTableColumnNameRow() const;
+
+    int getCmdbTableDataStartRow() const;
+
+    int getCmdbTableOrdinalColumn() const;
 
 private:
     QString configFilename {"config.ini"};
@@ -37,9 +55,19 @@ private:
     QVector<QString> invisibleAssetColumnNames {"卡片编号","实物资产编号","资产名称","使用人"}; //没用，待删
     MapS2I fixedAssetColumnName2Index; //没用，待删
     MapS2I invisibleAssetColumnName2Index; //没用，待删
-    int assetBookColumnNameRow {1};
-    int assetBookDataStartRow {5};
-    int assetBookOrdinalColumn {1};
+    int bookTableColumnNameRow {1}; //自制台账
+    int bookTableDataStartRow {5};
+    int bookTableOrdinalColumn {1};
+    //以下各类表格的相关初始值待确认
+    int detailTableColumnNameRow {1}; //交付使用资产明细表
+    int detailTableDataStartRow {2};
+    int detailTableOrdinalColumn {1};
+    int assetTableColumnNameRow {1}; //资产入账清册
+    int assetTableDataStartRow {2};
+    int assetTableOrdinalColumn {1};
+    int cmdbTableColumnNameRow {1}; //基础资源系统
+    int cmdbTableDataStartRow {2};
+    int cmdbTableOrdinalColumn {1};
 
 private:
     void setDefaultValues();

@@ -6,6 +6,8 @@
 
 #include "xlsxdocument.h"
 
+#include "constant.h"
+
 class Config;
 class ExcelSheet;
 class FileDialog;
@@ -36,6 +38,7 @@ private:
 
 private:
     void readShowAssetBook(const QString& file);
+    void readShowThirdFile(const QString& file, const AssetType assetType, const FormType formType);
 
 };
 #endif // MAINWINDOW_H

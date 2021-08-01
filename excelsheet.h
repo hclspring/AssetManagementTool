@@ -10,6 +10,7 @@
 #include "constant.h"
 
 class Util;
+class Config;
 
 class ExcelSheet
 {
@@ -45,14 +46,17 @@ public:
     int getOrdinalColumn();
     AssetType getAssetType();
     FormType getFormType();
+    QTableWidget *getTableWidget() const;
 
     void setAssetType(AssetType at);
     void setFormType(FormType ft);
 
     void initFileConfig(const int& columnNameRow, const int& dataStartRow, const int& ordinalColumn);
+    void initFileConfig(FormType formType, Config* config);
     void readSheet(QXlsx::Document& assetDocument, const QString& sheetName);
     void readSheet(QXlsx::Worksheet* worksheet);
     void showSheet();
+
 
 private:
     void setColumnNames(const QVector<QString>& columnNames);

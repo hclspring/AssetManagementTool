@@ -61,16 +61,61 @@ int Config::getInvisibleAssetColumnIndex(const QString& columnName)
     }
 }
 
-int Config::getAssetBookColumnNameRow() {
-    return assetBookColumnNameRow;
+int Config::getBookTableColumnNameRow() {
+    return bookTableColumnNameRow;
 }
 
-int Config::getAssetBookDataStartRow() {
-    return assetBookDataStartRow;
+int Config::getBookTableDataStartRow() {
+    return bookTableDataStartRow;
 }
 
-int Config::getAssetBookOrdinalColumn() {
-    return assetBookOrdinalColumn;
+int Config::getBookTableOrdinalColumn() {
+    return bookTableOrdinalColumn;
+}
+
+int Config::getDetailTableColumnNameRow() const
+{
+    return detailTableColumnNameRow;
+}
+
+int Config::getDetailTableDataStartRow() const
+{
+    return detailTableDataStartRow;
+}
+
+int Config::getDetailTableOrdinalColumn() const
+{
+    return detailTableOrdinalColumn;
+}
+
+int Config::getAssetTableColumnNameRow() const
+{
+    return assetTableColumnNameRow;
+}
+
+int Config::getAssetTableDataStartRow() const
+{
+    return assetTableDataStartRow;
+}
+
+int Config::getAssetTableOrdinalColumn() const
+{
+    return assetTableOrdinalColumn;
+}
+
+int Config::getCmdbTableColumnNameRow() const
+{
+    return cmdbTableColumnNameRow;
+}
+
+int Config::getCmdbTableDataStartRow() const
+{
+    return cmdbTableDataStartRow;
+}
+
+int Config::getCmdbTableOrdinalColumn() const
+{
+    return cmdbTableOrdinalColumn;
 }
 
 void Config::setDefaultValues()

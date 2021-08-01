@@ -1,5 +1,6 @@
 ﻿#include "excelsheet.h"
 #include "util.h"
+#include "config.h"
 
 
 ExcelSheet::ExcelSheet()
@@ -9,6 +10,11 @@ ExcelSheet::ExcelSheet()
 ExcelSheet::ExcelSheet(QTableWidget* tableWidget)
 {
     this->tableWidget = tableWidget;
+}
+
+QTableWidget *ExcelSheet::getTableWidget() const
+{
+    return tableWidget;
 }
 
 
@@ -53,6 +59,34 @@ void ExcelSheet::initFileConfig(const int& columnNameRow, const int& dataStartRo
     this->showUselessRows = false;
 }
 
+void ExcelSheet::initFileConfig(FormType formType, Config* config)
+{
+    switch(formType) {
+    case BOOKFORM:
+        this->initFileConfig(config->getBookTableColumnNameRow(),
+                                   config->getBookTableDataStartRow(),
+                                   config->getBookTableOrdinalColumn());
+        break;
+    case DETAILFORM:
+        this->initFileConfig(config->getDetailTableColumnNameRow(),
+                                   config->getDetailTableDataStartRow(),
+                                   config->getDetailTableOrdinalColumn());
+        break;
+    case ASSETFORM:
+        this->initFileConfig(config->getAssetTableColumnNameRow(),
+                             config->getAssetTableDataStartRow(),
+                             config->getAssetTableOrdinalColumn());
+        break;
+    case CMDBFORM:
+        this->initFileConfig(config->getCmdbTableColumnNameRow(),
+                             config->getCmdbTableDataStartRow(),
+                             config->getCmdbTableOrdinalColumn());
+        break;
+    default:
+        qDebug() << "无法获取该类型表格相关参数";
+    }
+}
+
 void ExcelSheet::readSheet(QXlsx::Document& assetDocument, const QString& sheetName)
 {
     assetDocument.selectSheet(sheetName);
@@ -68,7 +102,7 @@ void ExcelSheet::readSheet(QXlsx::Worksheet* worksheet)
     QVector<QVariant> row;
     row.resize(maxCol);
     sheetContent.fill(row, maxRow);
-    for (int r = 1; r <= maxRow; ++r) {
+    for (int r = getColumnNameRow(); r <= maxRow; ++r) {
         for (int c = 1; c <= maxCol; ++c) {
             sheetContent[r-1][c-1] = worksheet->read(r, c);
         }

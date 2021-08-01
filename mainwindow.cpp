@@ -12,7 +12,7 @@ MainWindow::MainWindow(QWidget *parent)
     config = new Config();
     fixedAssetSheet = new ExcelSheet(ui->fixedAssetSheetWidget);
     invisibleAssetSheet = new ExcelSheet(ui->invisibleAssetSheetWidget);
-    thirdSheet = NULL;
+    thirdSheet = new ExcelSheet(ui->thirdSheetWidget);
     //initTabWidget();
     //readAssetBookFile();
     //test();
@@ -113,33 +113,58 @@ void MainWindow::readShowAssetBook(const QString& file)
     QXlsx::Document assetBookFile(file);
     if (assetBookFile.load()) {
         QStringList sheetNames = assetBookFile.sheetNames();
+        if (sheetNames.size() <= 0) {
+            qDebug() << "台账文件中没有足够的表格，目前只有" << sheetNames.size() << "个sheet.";
+        } else {
         for (int sheetIndex = 0; sheetIndex < sheetNames.length(); ++sheetIndex) {
             QString sheetName = sheetNames[sheetIndex];
             if (sheetName.contains("硬件") || sheetName.contains("固定")) {
                 //读取固定资产交付物台账内容，展现到界面上
                 fixedAssetSheet->setAssetType(FIXED);
                 fixedAssetSheet->setFormType(BOOKFORM);
-                fixedAssetSheet->initFileConfig(config->getAssetBookColumnNameRow(),
-                                                config->getAssetBookDataStartRow(),
-                                                config->getAssetBookOrdinalColumn());
+                fixedAssetSheet->initFileConfig(BOOKFORM, config);
                 fixedAssetSheet->readSheet(assetBookFile, sheetName);
                 fixedAssetSheet->showSheet();
             } else if (sheetName.contains("软件") || sheetName.contains("无形")) {
                 //读取无形资产交付物台账内容，展现到界面上
                 invisibleAssetSheet->setAssetType(INVISIBLE);
                 invisibleAssetSheet->setFormType(BOOKFORM);
-                invisibleAssetSheet->initFileConfig(config->getAssetBookColumnNameRow(),
-                                                config->getAssetBookDataStartRow(),
-                                                config->getAssetBookOrdinalColumn());
+                invisibleAssetSheet->initFileConfig(BOOKFORM, config);
                 invisibleAssetSheet->readSheet(assetBookFile, sheetName);
                 invisibleAssetSheet->showSheet();
             } else {
                 qDebug() << "发现名为" << sheetNames[sheetIndex] << "的未定义sheet，未读取。";
             }
         }
+        }
     } else {
         qDebug() << "读取交付物台账文件" << file << "失败！";
     }
+    //ui->fixedAssetTab->setFocus();
+}
+
+void MainWindow::readShowThirdFile(const QString &file, const AssetType assetType, const FormType formType)
+{
+    QXlsx::Document thirdFile(file);
+    if (thirdFile.load()) {
+        QStringList sheetNames = thirdFile.sheetNames();
+        if (sheetNames.size() <= 0) {
+            qDebug() << "文件中没有足够的表格，目前只有" << sheetNames.size() << "个sheet.";
+        } else {
+            int sheetIndex = 0;
+            QString sheetName = sheetNames[sheetIndex];
+            thirdSheet->setAssetType(assetType);
+            thirdSheet->setFormType(formType);
+            //根据assestType和formType来初始化config中的参数，例如列名行、数据起始行、序号列
+            thirdSheet->initFileConfig(formType, config);
+            thirdSheet->readSheet(thirdFile, sheetName);
+            thirdSheet->showSheet();
+        }
+    } else {
+        qDebug() << "读取文件" << file << "失败！";
+    }
+    //ui->tabWidget->setCurrentWidget(thirdSheet->getTableWidget());
+    ui->tabWidget->setCurrentIndex(2);
 }
 
 
@@ -175,10 +200,8 @@ void MainWindow::on_imporFileButton_clicked()
     //选择输入文件夹
     importFileDialog = new FileDialog;
     importFileDialog->exec();
-    qDebug() << importFileDialog->getFilePath();
-    qDebug() << importFileDialog->getAssetType();
-    qDebug() << importFileDialog->getFormType();
-    //inputDirString = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, "浏览文件夹", QDir::currentPath(), QFileDialog::DontUseNativeDialog));
-    //ui->inputDirLabel->setText(inputDirString);
+    readShowThirdFile(importFileDialog->getFilePath(), importFileDialog->getAssetType(), importFileDialog->getFormType());
+    delete importFileDialog;
+    importFileDialog = NULL;
 }
 
