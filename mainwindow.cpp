@@ -2,6 +2,7 @@
 #include "ui_mainwindow.h"
 #include "config.h"
 #include "excelsheet.h"
+#include "filedialog.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -116,6 +117,8 @@ void MainWindow::readShowAssetBook(const QString& file)
             QString sheetName = sheetNames[sheetIndex];
             if (sheetName.contains("硬件") || sheetName.contains("固定")) {
                 //读取固定资产交付物台账内容，展现到界面上
+                fixedAssetSheet->setAssetType(FIXED);
+                fixedAssetSheet->setFormType(BOOKFORM);
                 fixedAssetSheet->initFileConfig(config->getAssetBookColumnNameRow(),
                                                 config->getAssetBookDataStartRow(),
                                                 config->getAssetBookOrdinalColumn());
@@ -123,6 +126,8 @@ void MainWindow::readShowAssetBook(const QString& file)
                 fixedAssetSheet->showSheet();
             } else if (sheetName.contains("软件") || sheetName.contains("无形")) {
                 //读取无形资产交付物台账内容，展现到界面上
+                invisibleAssetSheet->setAssetType(INVISIBLE);
+                invisibleAssetSheet->setFormType(BOOKFORM);
                 invisibleAssetSheet->initFileConfig(config->getAssetBookColumnNameRow(),
                                                 config->getAssetBookDataStartRow(),
                                                 config->getAssetBookOrdinalColumn());
@@ -135,5 +140,45 @@ void MainWindow::readShowAssetBook(const QString& file)
     } else {
         qDebug() << "读取交付物台账文件" << file << "失败！";
     }
+}
+
+
+/*
+void Widget::on_lsInputDirButton_clicked()
+{
+    //选择输入文件夹
+    inputDirString = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, "浏览文件夹", QDir::currentPath(), QFileDialog::DontUseNativeDialog));
+    ui->inputDirLabel->setText(inputDirString);
+
+    //获取输入文件夹下所有文件并展示出来
+    QDir inputDir(inputDirString);
+    inputDir.setFilter(QDir::Files);
+    QFileInfoList inputFileList =  inputDir.entryInfoList();
+    inputFilenameList.clear();
+    actualInputFilenameList.clear();
+    ui->listInputDirWidget->clear();
+    for (int i = 0; i < inputFileList.size(); ++i) {
+        QString fileName = inputFileList[i].fileName();
+        ui->listInputDirWidget->addItem(fileName);
+        inputFilenameList.append(fileName);
+        if (fileName.endsWith(QString(".xls"), Qt::CaseInsensitive)) {
+            actualInputFilenameList.append(fileName);
+        }
+    }
+    checkInputItemColor();
+    checkOutputItemColor();
+}
+*/
+
+void MainWindow::on_imporFileButton_clicked()
+{
+    //选择输入文件夹
+    importFileDialog = new FileDialog;
+    importFileDialog->exec();
+    qDebug() << importFileDialog->getFilePath();
+    qDebug() << importFileDialog->getAssetType();
+    qDebug() << importFileDialog->getFormType();
+    //inputDirString = QDir::toNativeSeparators(QFileDialog::getExistingDirectory(this, "浏览文件夹", QDir::currentPath(), QFileDialog::DontUseNativeDialog));
+    //ui->inputDirLabel->setText(inputDirString);
 }
 

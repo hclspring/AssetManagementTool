@@ -7,6 +7,8 @@
 
 #include "xlsxdocument.h"
 
+#include "constant.h"
+
 class Util;
 
 class ExcelSheet
@@ -33,12 +35,19 @@ private:
     int maxRow; //最大行数（从1开始算）
     int maxCol; //最大列数（从1开始算）
     bool showUselessRows; //是否展示无用列
+    AssetType assetType; //固定资产FIXED，还是无形资产INVISIBLE
+    FormType formType; //自制台账BOOKFORM, 交付使用资产明细表DETAILFORM, 资产入账清册ASSETFORM，基础资源系统CMDBFORM, 其他OTHERFORM
 
 public:
     QVector<QString> getColumnNames();
     int getColumnNameRow();
     int getDataStartRow();
     int getOrdinalColumn();
+    AssetType getAssetType();
+    FormType getFormType();
+
+    void setAssetType(AssetType at);
+    void setFormType(FormType ft);
 
     void initFileConfig(const int& columnNameRow, const int& dataStartRow, const int& ordinalColumn);
     void readSheet(QXlsx::Document& assetDocument, const QString& sheetName);

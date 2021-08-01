@@ -29,7 +29,7 @@
     <set>QDialogButtonBox::Cancel|QDialogButtonBox::Ok</set>
    </property>
   </widget>
-  <widget class="QLineEdit" name="lineEdit">
+  <widget class="QLineEdit" name="filePathEdit">
    <property name="enabled">
     <bool>false</bool>
    </property>
@@ -42,7 +42,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="pushButton">
+  <widget class="QPushButton" name="browseButton">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -55,7 +55,7 @@
     <string>浏览</string>
    </property>
   </widget>
-  <widget class="QGroupBox" name="groupBox">
+  <widget class="QGroupBox" name="assetCategoryBox">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -67,7 +67,7 @@
    <property name="title">
     <string>交付物类别</string>
    </property>
-   <widget class="QRadioButton" name="radioButton">
+   <widget class="QRadioButton" name="fixedAssetButton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -80,10 +80,10 @@
      <string>固定资产</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_2">
+   <widget class="QRadioButton" name="invisibleAssetButton">
     <property name="geometry">
      <rect>
-      <x>100</x>
+      <x>170</x>
       <y>20</y>
       <width>89</width>
       <height>16</height>
@@ -93,21 +93,8 @@
      <string>无形资产</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_3">
-    <property name="geometry">
-     <rect>
-      <x>200</x>
-      <y>20</y>
-      <width>89</width>
-      <height>16</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>两者都有</string>
-    </property>
-   </widget>
   </widget>
-  <widget class="QGroupBox" name="groupBox_2">
+  <widget class="QGroupBox" name="formTypeBox">
    <property name="geometry">
     <rect>
      <x>10</x>
@@ -119,20 +106,20 @@
    <property name="title">
     <string>表格形式</string>
    </property>
-   <widget class="QRadioButton" name="radioButton_4">
+   <widget class="QRadioButton" name="bookTypeButton">
     <property name="geometry">
      <rect>
       <x>10</x>
       <y>30</y>
-      <width>89</width>
+      <width>101</width>
       <height>16</height>
      </rect>
     </property>
     <property name="text">
-     <string>自制大表</string>
+     <string>自制台账大表</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_5">
+   <widget class="QRadioButton" name="cmdbTypeButton">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -145,7 +132,7 @@
      <string>基础资源系统</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_6">
+   <widget class="QRadioButton" name="detailTypeButton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -158,7 +145,7 @@
      <string>交付使用资产明细表</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_7">
+   <widget class="QRadioButton" name="assetTypeButton">
     <property name="geometry">
      <rect>
       <x>170</x>
@@ -171,7 +158,7 @@
      <string>资产入账清册</string>
     </property>
    </widget>
-   <widget class="QRadioButton" name="radioButton_8">
+   <widget class="QRadioButton" name="otherTypeButton">
     <property name="geometry">
      <rect>
       <x>10</x>
@@ -256,6 +243,22 @@
     <hint type="destinationlabel">
      <x>286</x>
      <y>274</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>fixedAssetButton</sender>
+   <signal>clicked()</signal>
+   <receiver>FileDialog</receiver>
+   <slot>update()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>64</x>
+     <y>97</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>199</x>
+     <y>186</y>
     </hint>
    </hints>
   </connection>

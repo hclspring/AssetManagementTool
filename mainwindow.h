@@ -8,6 +8,7 @@
 
 class Config;
 class ExcelSheet;
+class FileDialog;
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -21,8 +22,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    //void initTabWidget(); //To delete
-    //void readAssetBookFile(); //To delete
+private slots:
+    void on_imporFileButton_clicked();
 
 private:
     Ui::MainWindow *ui;
@@ -30,12 +31,11 @@ private:
     ExcelSheet* fixedAssetSheet;
     ExcelSheet* invisibleAssetSheet;
     ExcelSheet* thirdSheet {NULL};
+    FileDialog* importFileDialog;
+    FileDialog* exportFileDialog;
 
 private:
     void readShowAssetBook(const QString& file);
-    //void initTableWidget(QTableWidget* tableWidget, const QVector<QString>& columnNames); //To delete
-    //void readAssetBookSheet(QXlsx::Document& assetBookDocument, const QString& sheetName, QTableWidget* tableWidget); //To delete
-    //void test();
 
 };
 #endif // MAINWINDOW_H

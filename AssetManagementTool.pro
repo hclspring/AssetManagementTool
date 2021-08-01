@@ -18,6 +18,7 @@ SOURCES += \
 
 HEADERS += \
     config.h \
+    constant.h \
     excelsheet.h \
     filedialog.h \
     mainwindow.h \

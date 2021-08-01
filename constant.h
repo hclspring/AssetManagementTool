@@ -1,0 +1,9 @@
+﻿#ifndef CONSTANT_H
+#define CONSTANT_H
+
+
+enum AssetType {FIXED, INVISIBLE};
+enum FormType {BOOKFORM, DETAILFORM, ASSETFORM, CMDBFORM, OTHERFORM};
+
+
+#endif // CONSTANT_H

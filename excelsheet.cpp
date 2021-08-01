@@ -29,6 +29,22 @@ int ExcelSheet::getOrdinalColumn() {
 }
 
 
+AssetType ExcelSheet::getAssetType() {
+    return assetType;
+}
+
+FormType ExcelSheet::getFormType() {
+    return formType;
+}
+
+void ExcelSheet::setAssetType(AssetType at) {
+    this->assetType = at;
+}
+
+void ExcelSheet::setFormType(FormType ft) {
+    this->formType = ft;
+}
+
 void ExcelSheet::initFileConfig(const int& columnNameRow, const int& dataStartRow, const int& ordinalColumn)
 {
     this->columnNameRow = columnNameRow;
@@ -105,7 +121,7 @@ void ExcelSheet::initHeader() {
     for (int i = 0; i< columnNames.size(); ++i) {
         QString headString = "[" + Util::genColumnNumber(i) + "]" + columnNames[i];
         QTableWidgetItem* headerItem = new QTableWidgetItem(headString);
-        qDebug() << i << headString;
+        //qDebug() << i << headString;
         QFont headerFont = headerItem->font();
         headerFont.setBold(true);
         tableWidget->setHorizontalHeaderItem(i, headerItem);
